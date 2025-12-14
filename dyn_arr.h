@@ -1,7 +1,7 @@
 #ifndef DYN_ARR_H
 #define DYN_ARR_H
 
-#include <sys/types.h>
+#include <stddef.h>
 
 typedef struct Numbers Numbers;
 
@@ -18,9 +18,9 @@ typedef enum DynCode DynCode;
 Numbers* num_init();
 DynCode num_push(Numbers* dyn, double thing);
 DynCode num_pop(Numbers* dyn, double *out);
-DynCode num_add(Numbers* dyn, double thing, ssize_t index);
-DynCode num_at(Numbers* dyn, ssize_t index, double *out);
-DynCode num_alter(Numbers* dyn, ssize_t index, double data);
+DynCode num_add(Numbers* dyn, double thing, ptrdiff_t index);
+DynCode num_at(Numbers* dyn, ptrdiff_t index, double *out);
+DynCode num_alter(Numbers* dyn, ptrdiff_t index, double data);
 void num_close(Numbers* dyn);
 void num_print(Numbers* dyn);
 

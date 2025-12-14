@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 
 enum DynCode {
@@ -20,7 +21,7 @@ typedef struct Numbers {
 
 // Returns 1 if the given index is out of bounds
 // otherwise returns 0
-static int index_bound_control(Numbers* dyn, ssize_t index) {
+static int index_bound_control(Numbers* dyn, ptrdiff_t index) {
     if (index >= dyn->count || index < 0) return 1;
     else return 0;
 }
@@ -101,7 +102,7 @@ enum DynCode num_pop(Numbers* dyn, double *out) {
 // Insert a value at the given index.
 // Elements at and above the index are shifted to the right
 // TODO: allow insertion at the end of the array
-enum DynCode num_add(Numbers* dyn, double value, ssize_t index) {
+enum DynCode num_add(Numbers* dyn, double value, ptrdiff_t index) {
     if (index < 0) index += dyn->count;
 
     if (index_bound_control(dyn, index)) {
@@ -137,7 +138,7 @@ enum DynCode num_add(Numbers* dyn, double value, ssize_t index) {
 
 
 // Retrieve the value at the given index and store it in out
-enum DynCode num_at(Numbers* dyn, ssize_t index, double *out) {
+enum DynCode num_at(Numbers* dyn, ptrdiff_t index, double *out) {
     if (index < 0)
         index += dyn->count;
 
@@ -151,7 +152,7 @@ enum DynCode num_at(Numbers* dyn, ssize_t index, double *out) {
 
 
 // Replace the value at the given index
-enum DynCode num_alter(Numbers* dyn, ssize_t index, double data) {
+enum DynCode num_alter(Numbers* dyn, ptrdiff_t index, double data) {
     if (index < 0)
         index += dyn->count;
 
