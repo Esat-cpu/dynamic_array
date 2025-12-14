@@ -101,11 +101,11 @@ enum DynCode num_pop(Numbers* dyn, double *out) {
 
 // Insert a value at the given index.
 // Elements at and above the index are shifted to the right
-// TODO: allow insertion at the end of the array
+// Allows insertion at the end of the array
 enum DynCode num_add(Numbers* dyn, double value, ptrdiff_t index) {
     if (index < 0) index += dyn->count;
 
-    if (index_bound_control(dyn, index)) {
+    if (index != dyn->count && index_bound_control(dyn, index)) {
         return DYN_INDEX_OUT_OF_RANGE_ERR;
     }
 
