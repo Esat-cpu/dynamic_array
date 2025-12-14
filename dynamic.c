@@ -164,6 +164,14 @@ enum DynCode num_alter(Numbers* dyn, ptrdiff_t index, double data) {
 }
 
 
+
+// Returns the count of the nums
+size_t num_get_count(Numbers* dyn) {
+    return dyn->count;
+}
+
+
+
 // Free the Numbers object and its internal buffer
 void num_close(Numbers* dyn) {
     if (!dyn) return;

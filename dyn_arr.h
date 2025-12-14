@@ -21,6 +21,7 @@ DynCode num_pop(Numbers* dyn, double *out);
 DynCode num_add(Numbers* dyn, double thing, ptrdiff_t index);
 DynCode num_at(Numbers* dyn, ptrdiff_t index, double *out);
 DynCode num_alter(Numbers* dyn, ptrdiff_t index, double data);
+size_t num_get_count(Numbers* dyn);
 void num_close(Numbers* dyn);
 void num_print(Numbers* dyn);
 
