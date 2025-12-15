@@ -225,38 +225,3 @@ void num_close(Numbers* dyn) {
     free(dyn);
 }
 
-
-// print nums
-void num_print(Numbers* dyn) {
-    printf("[");
-
-    for (size_t i = 0; i < dyn->count; ++i) {
-        printf("%.2f, ", dyn->nums[i]);
-    }
-
-    if (dyn->count) printf("\b\b");
-    printf("]\n");
-}
-
-
-int main() {
-    Numbers* denem = num_init();
-
-    num_push(denem, 10.3);
-    num_push(denem, 32.2);
-    num_push(denem, 42.1);
-
-    if (num_alter(denem, -2, 3) == DYN_INDEX_OUT_OF_RANGE_ERR)
-        return 1;
-
-    double v;
-    num_at(denem, 1, &v);
-    printf("Sayı: %f\n", v);
-
-    num_add(denem, 42.141592653589, 1);
-
-    num_print(denem);
-
-    num_close(denem);
-}
-
