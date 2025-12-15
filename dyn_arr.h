@@ -19,9 +19,11 @@ Numbers* num_init();
 DynCode num_push(Numbers* dyn, double thing);
 DynCode num_pop(Numbers* dyn, double *out);
 DynCode num_add(Numbers* dyn, double thing, ptrdiff_t index);
+DynCode num_remove(Numbers* dyn, ptrdiff_t index, double *out);
 DynCode num_at(Numbers* dyn, ptrdiff_t index, double *out);
 DynCode num_alter(Numbers* dyn, ptrdiff_t index, double data);
 size_t num_get_count(Numbers* dyn);
+size_t num_mem_usage(Numbers* dyn);
 void num_close(Numbers* dyn);
 void num_print(Numbers* dyn);
 

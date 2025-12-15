@@ -72,7 +72,9 @@ enum DynCode num_pop(Numbers* dyn, double *out) {
     if (dyn->count == 0)
         return DYN_ARRAY_EMPTY_ERR;
 
-    *out = dyn->nums[dyn->count - 1];
+    if (out)
+        *out = dyn->nums[dyn->count - 1];
+
     dyn->count--;
 
 
@@ -135,6 +137,45 @@ enum DynCode num_add(Numbers* dyn, double value, ptrdiff_t index) {
 
 
 
+// Remove the value at the given index of the array and store it in out
+// out can be NULL if the value does not have to be stored
+enum DynCode num_remove(Numbers* dyn, ptrdiff_t index, double *out) {
+    if (index < 0) index += dyn->count;
+
+    if (index_bound_control(dyn, index))
+        return DYN_INDEX_OUT_OF_RANGE_ERR;
+
+    if (out)
+        *out = dyn->nums[index];
+
+    for (size_t i = index; i < (dyn->count - 1); i++) {
+        dyn->nums[i] = dyn->nums[i + 1];
+    }
+
+    dyn->count--;
+
+    if (dyn->count == 0) {
+        free(dyn->nums);
+        dyn->nums = NULL;
+        dyn->cap = 0;
+    }
+
+    else if (dyn->count < (dyn->cap >> 1)) {
+        size_t new_cap = new_size_to_alloc(dyn->count);
+
+        double* temp = realloc(dyn->nums, new_cap * sizeof(double));
+
+        if (temp) {
+            dyn->nums = temp;
+            dyn->cap = new_cap;
+        }
+    }
+
+    return DYN_OK;
+}
+
+
+
 
 
 // Retrieve the value at the given index and store it in out
@@ -170,6 +211,11 @@ size_t num_get_count(Numbers* dyn) {
     return dyn->count;
 }
 
+
+// Returns the amount of bytes that is allocated for the Numbers object
+size_t num_mem_usage(Numbers* dyn) {
+    return dyn->cap * sizeof(double) + sizeof(dyn->count) + sizeof(dyn->cap);
+}
 
 
 // Free the Numbers object and its internal buffer
